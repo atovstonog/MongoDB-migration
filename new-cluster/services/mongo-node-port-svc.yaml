@@ -1,0 +1,54 @@
+---
+apiVersion: v1
+kind: Service
+metadata:
+  namespace: example
+  name: example-mongo-primary-0
+  labels:
+    name: example-mongo-primary-0
+spec:
+  type: NodePort
+  selector:
+    statefulset.kubernetes.io/pod-name: example-mongo-primary-0
+  ports:
+    - name: mongo
+      port: 27017
+      nodePort: 31010
+      protocol: TCP
+---
+
+apiVersion: v1
+kind: Service
+metadata:
+  namespace: example
+  name: example-mongo-secondary-0
+  labels:
+    name: example-mongo-secondary-0
+spec:
+  type: NodePort
+  selector:
+    statefulset.kubernetes.io/pod-name: example-mongo-secondary-0
+  ports: 
+    - name: mongo
+      port: 27017
+      nodePort: 31011
+      protocol: TCP
+
+---
+
+apiVersion: v1
+kind: Service
+metadata:
+  namespace: example
+  name: example-mongo-secondary-1
+  labels:
+    name: example-mongo-secondary-1
+spec:
+  type: NodePort  
+  selector:
+    statefulset.kubernetes.io/pod-name: example-mongo-secondary-1
+  ports: 
+    - name: mongo
+      port: 27017
+      nodePort: 31012
+      protocol: TCP

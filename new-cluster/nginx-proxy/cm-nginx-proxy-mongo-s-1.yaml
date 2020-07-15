@@ -1,0 +1,24 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: cm-nginx-proxy-mongo-p-0
+  namespace: example
+data:
+  nginx.conf: |
+    worker_processes auto;
+    worker_rlimit_nofile 200000;
+    events {
+        worker_connections 10000;
+        multi_accept on;
+        use epoll;
+    }
+
+    stream {
+      upstream backend {
+        server 1.1.1.3:31003;
+      }
+      server {
+        listen 27017;
+        proxy_pass backend;
+      }
+    }
